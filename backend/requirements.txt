@@ -1,0 +1,8 @@
+
+tensorflow
+flask
+flask-cors
+numpy
+pillow
+scikit-learn
+matplotlib

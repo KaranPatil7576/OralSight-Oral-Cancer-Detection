@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f8f7" />
+    <title>OralSight — Research prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#" aria-label="OralSight home"><span class="brand-mark">O</span><span>oral<span class="brand-light">sight</span></span></a>
+        <div class="side-label">WORKSPACE</div>
+        <nav class="nav-list" aria-label="Main navigation">
+          <a class="nav-item active" href="#overview" data-page="overview"><span class="nav-icon">⌂</span>Overview</a>
+          <a class="nav-item" href="#analysis" data-page="analysis"><span class="nav-icon">＋</span>New analysis</a>
+          <a class="nav-item" href="#history" data-page="history" aria-disabled="true"><span class="nav-icon">▤</span>Case history <span class="nav-soon">Soon</span></a>
+          <a class="nav-item" href="#model-info" data-page="model-info"><span class="nav-icon">◈</span>Model info</a>
+        </nav>
+        <div class="side-bottom"><div class="research-pill"><span class="pulse-dot"></span>Research prototype</div><p>For educational use only.<br />Not a diagnostic tool.</p></div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <span id="breadcrumb-page">Overview</span></div><div class="top-actions"><span class="demo-pill"><span></span>Demo mode</span><button class="avatar" aria-label="User profile">A</button></div></header>
+        <section class="page-intro" data-view="overview"><div class="eyebrow">WORKSPACE</div><h1>Welcome to OralSight</h1><p class="subtitle">Start a new image analysis or learn about the research model.</p><button class="analyze-button intro-action" type="button" data-go="analysis">＋ &nbsp; New analysis</button></section>
+        <section class="page-intro history-empty" data-view="history" hidden><div class="empty-symbol">▤</div><div class="eyebrow">WORKSPACE</div><h1>Case history</h1><p class="subtitle">Case history is not available yet.</p></section>
+        <section class="welcome-row" data-view="overview analysis"><div><div class="eyebrow">ORAL IMAGE CLASSIFICATION</div><h1>Image analysis</h1><p class="subtitle">Explore how the research model classifies an oral image.</p></div><div class="model-tag"><span class="model-icon">✳</span><span>Model <strong>v0.1</strong></span></div></section>
+
+        <section class="analysis-grid" id="analysis" data-view="overview analysis">
+          <div class="column-left">
+            <article class="card upload-card">
+              <div class="card-heading"><div><h2>Upload an image</h2><p>Choose an oral image to prepare your analysis.</p></div><span class="step-number">01</span></div>
+              <label class="dropzone" id="dropzone" for="image-input" tabindex="0">
+                <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp" />
+                <div class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v5h14v-5" /></svg></div>
+                <strong>Drop an image here</strong><span>or <em>browse files</em></span>
+                <small>JPG, PNG or WebP · up to 10 MB</small>
+              </label>
+              <div class="selected-file" id="selected-file" hidden><img id="preview" alt="Selected image preview" /><div class="file-meta"><strong id="file-name">Image selected</strong><span id="file-size"></span></div><button id="replace-image" class="text-button" type="button">Replace</button><button id="remove-image" class="icon-button" type="button" aria-label="Remove selected image">×</button></div>
+              <div class="file-error" id="file-error" role="alert" hidden><strong id="file-error-title">This file can’t be used.</strong><span id="file-error-message"></span><button class="text-button" id="file-error-retry" type="button">Choose another image</button></div>
+              <button class="analyze-button" id="analyze-button" type="button" hidden>Run analysis <span>→</span></button>
+              <div class="upload-footer"><span><span class="lock-icon">⌑</span> Image stays in this session</span><button class="text-button" id="sample-button">Use sample image <span>↗</span></button></div>
+            </article>
+
+            <article class="card sample-card"><div class="sample-art" aria-hidden="true"><div class="art-ring ring-one"></div><div class="art-ring ring-two"></div><div class="art-core"></div><span class="art-spark spark-one">✦</span><span class="art-spark spark-two">✧</span></div><div class="sample-copy"><span class="sample-label">DEMO CASE · 01</span><h3>Explore a sample analysis</h3><p>See how the interface presents a model output.</p></div><button class="round-arrow" id="sample-arrow" aria-label="Load sample analysis">↗</button></article>
+          </div>
+
+          <div class="column-right">
+            <article class="card result-card" aria-live="polite">
+              <div class="card-heading"><div><h2>Model output</h2><p id="result-hint">Your model prediction will appear here.</p></div><span class="step-number">02</span></div>
+              <div class="empty-result" id="empty-result"><div class="empty-symbol">✳</div><strong>Ready when you are</strong><span>Choose an image, then start an analysis.</span></div>
+              <div class="pending-result" id="pending-result" hidden aria-live="polite"><span class="loader" aria-hidden="true"></span><strong>Analysis in progress</strong><span>Your image is being processed. This may take a moment.</span></div>
+              <div class="error-result" id="error-result" hidden role="alert"><div class="error-symbol">!</div><strong id="error-title">Prediction couldn’t be completed</strong><span id="error-message">Prediction service unavailable. Try again.</span><button class="retry-button" id="retry-button" type="button">Try again</button></div>
+              <div class="result-content" id="result-content" hidden>
+                <div class="result-status"><span class="status-dot"></span><span id="result-label">Prediction complete</span></div>
+                <div class="prediction">Dataset class <strong id="prediction-class">Cancer</strong></div>
+                <div class="score-row"><span>Model score</span><strong id="score-value">0.82</strong></div>
+                <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+                <div class="score-caption">This score is not a probability of cancer.</div>
+                <div class="model-version">Model version <strong id="model-version">—</strong></div>
+                <div class="explanation" id="explanation" hidden><div class="explanation-top"><div><h3>Model attention <span>Grad-CAM</span></h3><p>Visualization of regions influencing the model.</p></div><span class="sparkle">✧</span></div><img class="gradcam-image" id="gradcam-image" alt="Grad-CAM visualization for this prediction" /><div class="explain-note">This is a model visualization, not a clinical explanation.</div></div>
+                <div class="no-explanation" id="no-explanation" hidden><strong>No explanation image available</strong><span>The model returned a prediction without a Grad-CAM visualization.</span></div>
+              </div>
+            </article>
+            <div class="notice"><span class="notice-icon">i</span><p><strong>Research prototype</strong><br />This educational demo cannot diagnose or rule out cancer. Please consult a qualified dental or medical professional about any concern.</p></div>
+          </div>
+        </section>
+
+        <section class="model-info" id="model-info" data-view="model-info"><div><span class="eyebrow">ABOUT THIS MODEL</span><h2>How the classification works</h2></div><div class="info-copy">
+          <p><strong>1. Image upload:</strong> Choose a JPEG, PNG, or WebP image up to 10 MiB. The app checks the file type and size and shows a preview; these checks do not assess the image.</p>
+          <p><strong>2. Preprocessing:</strong> The image is sent to the prediction service at <code>/api/v1/predictions</code>. Image resizing, normalization, and other preprocessing happen in that service. Their exact steps are not included in this project.</p>
+          <p><strong>3. CNN classification:</strong> The service runs its image model and returns one of two dataset labels: <strong>Cancer</strong> or <strong>Non-Cancer</strong>. The model architecture and exact decision rule are not included here, so they cannot be specified from this project’s code.</p>
+          <p><strong>4. Result:</strong> The app displays the returned class, score, and model version. The score is a model score, not a probability of cancer. If supplied, Grad-CAM visualizes image regions that influenced the model; it is not a clinical explanation.</p>
+          <p><strong>Limitations:</strong> This is an educational research prototype, not a diagnostic tool. It has not been validated for clinical use; do not use it to diagnose, screen, or guide treatment. Consult a qualified dental or medical professional about concerns.</p>
+        </div></section>
+        <footer class="page-footer"><span>ORALSIGHT <span class="footer-dot">·</span> EDUCATIONAL DEMO</span><a href="#model-info">Dataset &amp; limitations <span>↗</span></a></footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
+

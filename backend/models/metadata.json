@@ -1,0 +1,12 @@
+{
+  "class_names": [
+    "Non-Cancer",
+    "Cancer"
+  ],
+  "image_size": [
+    224,
+    224
+  ],
+  "architecture": "MobileNetV2",
+  "model_version": "v1"
+}
